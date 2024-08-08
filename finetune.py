@@ -24,7 +24,6 @@ while job.status != 'succeeded':
     print(f"Job Estimated Finish time is {job.estimated_finish}")
     time.sleep(30)
 
-print(job)
 completion = client.chat.completions.create(
 model=job.fine_tuned_model,
 messages=[
