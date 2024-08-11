@@ -33,5 +33,5 @@ To ensure that this output structure is enforced when generating the training da
 This repository is follows part of the tutorial provided by OpenAI [2], with modifications to the base scripts and logic.
 
 # Reference
-[1]: OpenAI. "Introducing Structured Outputs in the API." OpenAI, https://openai.com/index/introducing-structured-outputs-in-the-api/.06 Aug. 2024.
-[2]: OpenAI. "Fine-Tuning" OpenAI, https://platform.openai.com/docs/guides/fine-tuning/.
+[1]: OpenAI. "Introducing Structured Outputs in the API." OpenAI, https://openai.com/index/introducing-structured-outputs-in-the-api/ 06Aug2024.
+[2]: OpenAI. "Fine-Tuning" OpenAI, https://platform.openai.com/docs/guides/fine-tuning/
