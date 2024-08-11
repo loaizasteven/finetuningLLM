@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from typing import Dict, Any
 
 
-class createData(BaseModel):
+class CreateData(BaseModel):
     """ Class to generate sample finetuning data from LLM to be used for task specific SLM
 
     Attributes:
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     pprint.pprint(synthconfig.get('metadata'))
 
     # Generate Call
-    synthdata = createData(
+    synthdata = CreateData(
         systemprompt = synthconfig.get('system_prompt'),
         userinput = "Provide 5 trianing examples",
         modelname = "gpt-3.5-turbo-16k"
