@@ -30,9 +30,8 @@ To ensure that this output structure is enforced when generating the training da
 2. Utilize the native kwarg `response_format` in the cilent object when creating the call. We can utilize pydantic classes with the wrapper method `client.beta.chat.completions.parse()` [[1]](#reference)
 
 ## Considerations
-This repository is follows part of the tutorial provided by OpenAI, with modifications to the base scripts and logic.
-* https://platform.openai.com/docs/guides/fine-tuning/
-
+This repository is follows part of the tutorial provided by OpenAI [2], with modifications to the base scripts and logic.
 
 # Reference
 [1]: OpenAI. "Introducing Structured Outputs in the API." OpenAI, https://openai.com/index/introducing-structured-outputs-in-the-api/.06 Aug. 2024.
+[2]: OpenAI. "Fine-Tuning" OpenAI, https://platform.openai.com/docs/guides/fine-tuning/.
