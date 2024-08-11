@@ -43,17 +43,23 @@ class createData(BaseModel):
         return self.completion.choices[0].message
 
     def jsondump(self, outputfile:str) -> str:
-        trainingdata = self.completion.choices[0].message.content
-        with open(outputfile, 'w') as outfile:
-            outfile.write(trainingdata)
+        try:
+            trainingdata = self.completion.choices[0].message.content
 
-        return f"Synthetic data completed and dumped to -> {outputfile}"
+            with open(outputfile, 'w') as outfile:
+                outfile.write(trainingdata)
+
+            return f"Synthetic data completed and dumped to -> {outputfile}"
+        except (AttributeError, BaseException) as e:
+            return f"Error: Unable to dump content -> {e} \n"
     
     def __del__(self):
         self.client.close()
 
     def close(self):
         self.__del__()
+
+        print('Message: closing client connection \n')
 
 if __name__ == "__main__":
     import os 
@@ -78,7 +84,11 @@ if __name__ == "__main__":
         modelname = "gpt-3.5-turbo-16k"
     )
 
-    synthdata()
+    # synthdata()
 
     # Dump Content
-    synthdata.jsondump(outputfile = osp.join(parent_dir, 'data', './syntheticdata.jsonl'))
+    status = synthdata.jsondump(outputfile = osp.join(parent_dir, 'data', './syntheticdata.jsonl'))
+    print(status)
+
+    # close client
+    synthdata.close()
