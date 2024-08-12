@@ -32,7 +32,7 @@ class CreateData(BaseModel):
     userinput: str
     modelname: str
     client: Any | None = None
-    maxtokens: int = 10000
+    maxtokens: int = 16000
     completion: ChatCompletion | None = None
 
     def __init__(self, **kwargs):
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     synthdata()
 
     # Dump Content
-    status = synthdata.jsondump(outputfile = osp.join(parent_dir, 'data', './syntheticdata.jsonl'))
+    status = synthdata.jsondump(outputfile = osp.join(parent_dir, 'data', './syntheticinsurancedata.jsonl'))
     print(status)
 
     # close client
