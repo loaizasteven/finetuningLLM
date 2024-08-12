@@ -53,7 +53,7 @@ def openAIFinetuning(
   return job
 
 
-def testmodel(client: OpenAI, modelname:str, question:str = 'Whats the captital of France!'):
+def validate(client: OpenAI, modelname:str, question:str = 'Whats the captital of France!'):
   """
   model name can be accessed from the retrieved job via the client through the fine_tuned_model attribute.
 

@@ -8,7 +8,7 @@ parent_dir = osp.dirname(file_dir)
 
 sys.path.insert(0, parent_dir)
 
-from openai_finetuning.finetune import testmodel, openAIFinetuning
+from openai_finetuning.finetune import validate, openAIFinetuning
 from openai import OpenAI
 
 if __name__ == "__main__":
@@ -47,7 +47,7 @@ if __name__ == "__main__":
         finetuned_model_ls = client.models.list() # filter to finetuned_model_ls.data entries owned_by not contains 'openai'
         modelname = _args.modelname or finetuned_model_ls.data[-1].id # if wait=True then use `job.fine_tuned_model`
         query = "Whats the captital of NY!"
-        response = testmodel(client=client, modelname=modelname)
+        response = validate(client=client, modelname=modelname)
 
         pprint.pprint(f"Running Inference on finetuned model: {modelname}")
         pprint.pprint({'userInput': query})
