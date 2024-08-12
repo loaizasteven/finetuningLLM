@@ -2,10 +2,21 @@ from openai import OpenAI
 
 from openai.types.chat.chat_completion import ChatCompletion, ChatCompletionMessage
 from pydantic import BaseModel
-from typing import Dict, Any
+from typing import Dict, Any, Union
+import jsonlines
+
+import sys
+import os.path as osp
+import json 
+
+file_dir = osp.dirname(__file__)
+parent_dir = osp.dirname(file_dir)
+
+sys.path.insert(0, parent_dir)
+from structuredoutput.classes import OpenAIResponse, TrainingClass
 
 
-class createData(BaseModel):
+class CreateData(BaseModel):
     """ Class to generate sample finetuning data from LLM to be used for task specific SLM
 
     Attributes:
@@ -21,7 +32,7 @@ class createData(BaseModel):
     userinput: str
     modelname: str
     client: Any | None = None
-    maxtokens: int = 3500
+    maxtokens: int = 16000
     completion: ChatCompletion | None = None
 
     def __init__(self, **kwargs):
@@ -30,10 +41,10 @@ class createData(BaseModel):
         self.client = OpenAI()
     
     def __call__(self) -> ChatCompletionMessage:
-        self.completion = self.client.chat.completions.create(
+        self.completion = self.client.beta.chat.completions.parse(
             model = self.modelname,
             max_tokens= self.maxtokens,
-            
+            response_format=TrainingClass,
             messages=[
                 {"role": "system", "content": f"{self.systemprompt}"},
                 {"role": "user", "content": f"{self.userinput}"}
@@ -42,12 +53,15 @@ class createData(BaseModel):
 
         return self.completion.choices[0].message
 
+    def parseobj(self, classobj:bool =False) -> Union[TrainingClass, Dict]:
+        msg = self.completion.choices[0].message
+        return msg.parsed if classobj else json.loads(msg.content)
+
     def jsondump(self, outputfile:str) -> str:
         try:
-            trainingdata = self.completion.choices[0].message.content
-
-            with open(outputfile, 'w') as outfile:
-                outfile.write(trainingdata)
+            trainingdata = self.parseobj()
+            with jsonlines.open(outputfile, 'w') as writer:
+                writer.write_all(trainingdata.get('data'))
 
             return f"Synthetic data completed and dumped to -> {outputfile}"
         except (AttributeError, BaseException) as e:
@@ -61,15 +75,10 @@ class createData(BaseModel):
 
         print('Message: closing client connection \n')
 
-if __name__ == "__main__":
-    import os 
-    import os.path as osp
 
+if __name__ == "__main__":
     import pprint
     import yaml
-
-    file_dir = osp.dirname(__file__)
-    parent_dir = osp.dirname(file_dir)
 
     with open(file=osp.join(parent_dir, 'prompt/syntheticdata.yml'), mode='rb') as _readstream:
         synthconfig = yaml.load(stream=_readstream, Loader=yaml.FullLoader)
@@ -78,16 +87,16 @@ if __name__ == "__main__":
     pprint.pprint(synthconfig.get('metadata'))
 
     # Generate Call
-    synthdata = createData(
+    synthdata = CreateData(
         systemprompt = synthconfig.get('system_prompt'),
-        userinput = "Provide 5 trianing examples",
-        modelname = "gpt-3.5-turbo-16k"
+        userinput = "Provide 100 trianing examples",
+        modelname = "gpt-4o-2024-08-06"
     )
 
-    # synthdata()
+    synthdata()
 
     # Dump Content
-    status = synthdata.jsondump(outputfile = osp.join(parent_dir, 'data', './syntheticdata.jsonl'))
+    status = synthdata.jsondump(outputfile = osp.join(parent_dir, 'data', './syntheticinsurancedata.jsonl'))
     print(status)
 
     # close client
