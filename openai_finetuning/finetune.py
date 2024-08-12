@@ -110,4 +110,4 @@ if __name__ == "__main__":
         } 
         )
     
-    response = testmodel(client=OpenAI(), modelname=job.fine_tuned_model)
+    response = validate(client=OpenAI(), modelname=job.fine_tuned_model)
