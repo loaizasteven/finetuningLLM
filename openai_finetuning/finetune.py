@@ -105,7 +105,8 @@ if __name__ == "__main__":
         training_config={
             'wait': True,
             'verbose': True,
-            'patience': 30
+            'patience': 30,
+            'n_epochs': 10
         } 
         )
     
