@@ -39,11 +39,13 @@ To ensure that this output structure is enforced when generating the training da
 ## Fine Tuning Task
 Some examples of specific SLM finetuned for a particular domain or task.
 
-### Insurance Agent
-[TODO]: Add More Context \ 
+### Insurance assistant
+Finetune an smaller language model based on training data from the LLM related to insurance tasks. The training also includes unrelated questions to provide context on how the model should response, or refuse to respond. The performance is difficult to measure, as this is synthetic data and not part of a specific corpus of data unknown to the model. 
 
-Step 1: Generate Sytntheic Data: Use the main run script of `synthetic.chatcompletion.py` to generate the training data as a jsonl format
-Step 2: FineTuning: See `train.py --run True` for application of `openai_finetuning.finetune.openAIFinetuning()` method for insurance agent.
+This section is to showcase the strategy in step1. In a future application it will use **SynthPrompt** to finetune an insruance assistant.
+
+Step 1: Generate Sytntheic Data: Use the main run script of `synthetic.chatcompletion.py` to generate the training data as a jsonl format. \
+Step 2: FineTuning: See `train.py --run True` for application of `openai_finetuning.finetune.openAIFinetuning()` method for insurance agent. \
 Step 3: Test: Run `train.py --run False` for an example query to the finetuned insurance agent.
 
 ## Considerations
