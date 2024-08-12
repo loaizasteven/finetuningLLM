@@ -2,7 +2,7 @@ import os.path as osp
 import sys
 import json 
 
-from typing import List
+from typing import List, Any
 import pprint
 
 file_dir = osp.dirname(__file__)
@@ -16,8 +16,10 @@ from openai import OpenAI
 
 def latest_model(model_list:List) -> str:
     # Filter for non openai models
-    filtered_list = [obj for obj in model_list if hasattr(obj, 'owned_by') and 'openai' not in getattr(obj, 'owned_by')]
+    def exclude_values(obj: Any, values: tuple = ('openai', 'system')) -> bool:
+        return not any(value in getattr(obj, 'owned_by', '') for value in values)
 
+    filtered_list = list(filter(lambda obj: exclude_values(obj), model_list))
     sorted_list = sorted(filtered_list, key=lambda x: x.created, reverse=True)
 
     return getattr(sorted_list[0], 'id')
