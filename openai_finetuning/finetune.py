@@ -53,17 +53,18 @@ def openAIFinetuning(
   return job
 
 
-def validate(client: OpenAI, modelname:str, question:str = 'Whats the captital of France!'):
+def validate(client: OpenAI, modelname:str, question:str = 'Whats the captital of France!', system_prompt:str =""):
   """
   model name can be accessed from the retrieved job via the client through the fine_tuned_model attribute.
+  For example: `job = client.fine_tuning.jobs.retrieve(finetune_model.id)`.
 
-  Example:
-    ```
-    client = OpenAI()
-    finetune_model = FineTuningJob() # open ai object
-    job = client.fine_tuning.jobs.retrieve(finetune_model.id)
-    job.fine_tuned_model
-    ```
+  Docstring Test
+  >>> client = OpenAI()
+  >>> models = client.models.list()
+  >>> latest_models = models.data[-1].id
+  >>> response = validate(client=client, modelname=latest_models)
+  >>> 'paris' in response.content.lower()
+  True
 
   Args:
     client:
@@ -72,6 +73,7 @@ def validate(client: OpenAI, modelname:str, question:str = 'Whats the captital o
   completion = client.chat.completions.create(
   model=modelname,
   messages=[
+      {"role": "system", "content": f"{system_prompt}"},
       {"role": "user", "content": f"{question}"}
   ]
   )
