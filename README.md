@@ -40,6 +40,8 @@ To ensure that this output structure is enforced when generating the training da
 Some examples of specific SLM finetuned for a particular domain or task.
 
 ### Insurance Agent
+[TODO]: Add More Context \ 
+
 Step 1: Generate Sytntheic Data: Use the main run script of `synthetic.chatcompletion.py` to generate the training data as a jsonl format
 Step 2: FineTuning: See `train.py --run True` for application of `openai_finetuning.finetune.openAIFinetuning()` method for insurance agent.
 Step 3: Test: Run `train.py --run False` for an example query to the finetuned insurance agent.
@@ -48,5 +50,5 @@ Step 3: Test: Run `train.py --run False` for an example query to the finetuned i
 This repository is follows part of the tutorial provided by OpenAI [2], with modifications to the base scripts and logic.
 
 # Reference
-[1]: OpenAI. "Introducing Structured Outputs in the API." OpenAI, https://openai.com/index/introducing-structured-outputs-in-the-api/ 06Aug2024.
+[1]: OpenAI. "Introducing Structured Outputs in the API." OpenAI, https://openai.com/index/introducing-structured-outputs-in-the-api/ 06Aug2024. \
 [2]: OpenAI. "Fine-Tuning" OpenAI, https://platform.openai.com/docs/guides/fine-tuning/
