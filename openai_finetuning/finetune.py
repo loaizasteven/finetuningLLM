@@ -53,7 +53,7 @@ def openAIFinetuning(
   return job
 
 
-def testmodel(client, modelname):
+def testmodel(client, modelname:str, question:str = 'Whats the captital of France!'):
   """
   model name can be accessed from the retrieved job via the client through the fine_tuned_model attribute.
 
@@ -72,7 +72,7 @@ def testmodel(client, modelname):
   completion = client.chat.completions.create(
   model=modelname,
   messages=[
-      {"role": "user", "content": "Whats the captital of France!"}
+      {"role": "user", "content": f"{question}"}
   ]
   )
 
