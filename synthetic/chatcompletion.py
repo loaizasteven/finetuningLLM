@@ -19,6 +19,16 @@ from structuredoutput.classes import OpenAIResponse, TrainingClass
 class CreateData(BaseModel):
     """ Class to generate sample finetuning data from LLM to be used for task specific SLM
 
+    Docstring Test
+    >>> synthdata = CreateData(
+    ...         systemprompt = "provide a small finetuning training example",
+    ...         userinput = "Provide 1 trianing examples",
+    ...         modelname = "gpt-4o-2024-08-06"
+    ...     )
+    >>> response = synthdata()
+    >>> isinstance(response.parsed, TrainingClass)
+    True
+
     Attributes:
         systemprompt: system message prompt
         userinput: input query
