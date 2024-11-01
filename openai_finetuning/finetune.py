@@ -93,7 +93,7 @@ if __name__ == "__main__":
             prog='OpenAI Client Finetuning',
             description="Arguments for finetuning with openai client"
         )
-        parser.add_argument("--filepath", default=osp.join(parent_dir, 'data', 'mydata.jsonl'), type=str, required=False)
+        parser.add_argument("--filepath", default=osp.join(parent_dir, 'data', 'syntheticdata.jsonl'), type=str, required=False)
         parser.add_argument("--model", default='gpt-3.5-turbo', type=str, required=False) # gpt-4o-mini-2024-07-18
         parser.add_argument("--run", default=False, type=bool, required=False)
 
