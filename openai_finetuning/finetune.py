@@ -42,12 +42,14 @@ def openAIFinetuning(
   if training_config.get('wait'):
     while job.status != 'succeeded':
       job = client.fine_tuning.jobs.retrieve(finetune_model.id)
-      if training_config.get('verbose'):
+      if training_config.get('verbose') and job.status != 'succeeded':
         print(f"Job status is {job.status}")
         print(f"Job Estimated Finish time is {job.estimated_finish}")
 
-    # Wait before retrieve job status
-    time.sleep(training_config.get('patience'))
+        # Wait before retrieve job status
+        time.sleep(training_config.get('patience'))
+    else:
+       print('Job Successfully Completed')
 
   client.close()
   return job
